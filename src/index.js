@@ -1,5 +1,7 @@
-const apiUrl = "http://localhost:3000/posts";
+const apiUrl = ("http://localhost:3000/posts");
+
 const postList = document.getElementById("blogList");
+
 const createForm = document.getElementById("form-section");
 
 function getPosts() {
@@ -9,44 +11,44 @@ function getPosts() {
       postList.innerHTML = "";
 
       data.forEach((post) => {
-        const blogId = post.id;
-        const blogTitle = post.title || "";
-        const blogBody = post.body || "";
+        const postId = post.id;
+        const postTitle = post.title || "";
+        const postBody = post.body || "";
 
         const li = document.createElement("li");
 
         li.innerHTML = ` 
-        <div id="post-${blogId}" class="post">
+        <div id="post-${postId}" class="post">
 
-        <div>
-          <b>${blogTitle}</b>
-          <p>${blogBody}</p>
-        </div>
-        <div class="actions">
-          <button onclick="showEditForm('${blogId}', '${blogTitle}', '${blogBody}')" class="myButton">edit</button>
-          <button onclick="deletePost('${blogId}')" class="myDeleteButton">delete</button>
-        </div>
+         <div>
+          <h2>${postTitle}</h2>
+          <p>${postBody}</p>
+         </div>
+
+         <div class="actions">
+          <button onclick="showEditForm('${postId}', '${postTitle}', '${postBody}')" class="myButton">edit</button>
+          <button onclick="deletePost('${postId}')" class="myDeleteButton">delete</button>
+         </div>
+
         </div>
         
         `;
 
         postList.appendChild(li);
-      });
-    });
+      })
+    })
 }
 
 createForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
-  const title = document.getElementById("title").value;
-  const body = document.getElementById("post-content").value;
+  const blogTitle = document.getElementById("blog-title").value;
+  const blogBody = document.getElementById("blog-content").value;
 
   fetch(apiUrl, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ title, body }),
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ blogTitle, blogBody }),
   })
     .then((res) => res.json())
     .then((data) => {
@@ -58,26 +60,27 @@ createForm.addEventListener("submit", (e) => {
 });
 
 function showEditForm(postId, currentTitle, currentBody) {
-  const postDiv = document.getElementById(`post-${postIdId}`);
+  const postDiv = document.getElementById(`post-${postId}`);
 
   postDiv.innerHTML = `
 
 <div class="edit-form">
     <h3>Edit Post</h3>
-   <div>
-        <input type="text" id="edit-title-${postId}" value="${currentTitle}" placeholder="Edit title">
-<textarea id="edit-content-${postId}" placeholder="Edit content">${currentBody}</textarea>
-   </div>
-<div>
-<button onclick="saveEdit('${postId}')" class="myButton"><i class='bx bx-check'></i></button>
-<button onclick="cancelEdit('${postId}')" class="myDeleteButton"><i class='bx bx-x'></i></button>
-</div>
+
+    <div>
+      <input type="text" id="edit-title-${postId}" value="${currentTitle}" placeholder="Edit title">
+      <textarea id="edit-content-${postId}" placeholder="Edit content">${currentBody}</textarea>
+    </div>
+
+    <div>
+       <button onclick="saveEdit('${postId}')" class="myButton">save</button>
+       <button onclick="cancelEdit('${postId}')" class="myDeleteButton">cancel</i></button>
+    </div>
 
 </div>
 `;
 }
 
-// Patch request to update a post
 
 function saveEdit(postId) {
   const newTitle = document.getElementById(`edit-title-${postId}`).value;
@@ -85,9 +88,7 @@ function saveEdit(postId) {
 
   fetch(`${apiUrl}/${postId}`, {
     method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ title: newTitle, body: newContent }),
   })
     .then((res) => res.json())
