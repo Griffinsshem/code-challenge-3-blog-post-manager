@@ -1,7 +1,5 @@
 const apiUrl = "http://localhost:3000/posts";
-
 const postList = document.getElementById("blogList");
-
 const createForm = document.getElementById("form-section");
 
 function getPosts() {
@@ -60,7 +58,7 @@ createForm.addEventListener("submit", (e) => {
 });
 
 function showEditForm(postId, currentTitle, currentBody) {
-  const postDiv = document.getElementById(`post-${blogId}`);
+  const postDiv = document.getElementById(`post-${postIdId}`);
 
   postDiv.innerHTML = `
 
