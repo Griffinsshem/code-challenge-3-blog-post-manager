@@ -3,6 +3,8 @@
 
 A simple web-based blog management application that allows users to create, read, update, and delete (CRUD) blog posts. This project uses HTML, CSS, and JavaScript and communicates with a mock REST API (e.g., via JSON Server).
 
+---
+
 ## Features
 
     - Add new blog posts with a title and content.
@@ -14,6 +16,8 @@ A simple web-based blog management application that allows users to create, read
     - Delete blog posts.
 
     - Minimal and responsive design for readability.
+
+---
 
 ## Project Structure
 
@@ -28,6 +32,8 @@ blog-post-manager/
 ├── db.json            # Mock database for JSON Server
 ```
 
+---
+
 ## Technologies Used
 
    - HTML5 – For structure and form elements.
@@ -37,6 +43,8 @@ blog-post-manager/
    - JavaScript (ES6+) – For dynamic functionality and API communication.
 
    - JSON Server – Mock REST API for handling requests.
+
+ ---
 
 ## Getting Started
 
@@ -79,6 +87,8 @@ This runs the server at ```http://localhost:3000```.
 
 Just open ```index.html`` in your browser (no backend needed beyond the JSON Server).
 
+---
+
 ### How It Works
 
 #### HTML (```index.html```)
@@ -99,18 +109,19 @@ Just open ```index.html`` in your browser (no backend needed beyond the JSON Ser
 
 #### JavaScript (```src/index.js```)
 
-    - ```getPosts()``` — Fetches all posts and renders them in the DOM.
+    - getPosts() — Fetches all posts and renders them in the DOM.
 
-    - ```createForm.addEventListener()``` — Handles form submission to create new posts.
+    - createForm.addEventListener() — Handles form submission to create new posts.
 
-    - ```showEditForm()``` — Displays an inline form to update the selected post.
+    - showEditForm() — Displays an inline form to update the selected post.
 
-    - ```saveEdit()``` — Sends a PATCH request to update a post.
+    - saveEdit() — Sends a PATCH request to update a post.
 
-    - ```deletePost()``` — Sends a DELETE request to remove a post.
+    - deletePost() — Sends a DELETE request to remove a post.
 
-    - ```cancelEdit()``` — Cancels the edit and refreshes the post list.
+    - cancelEdit() — Cancels the edit and refreshes the post list.
 
+---
 
 ##  Author
 
