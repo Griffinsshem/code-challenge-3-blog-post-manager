@@ -12,25 +12,18 @@
 <body>
 
   <div class="container">
-
     <h1>BLOG POST MANAGER</h1>
 
     <p>Modern Blog Post Manager</p>
 
-    <form action="" id="form-section">
-
-      <input type="text" name="title" id="blog-title" placeholder="blog title" required>
-
-      <textarea name="blogText" id="myBlogText" placeholder="blog text" required></textarea>
-
-      <button type="submit" id="myCreateBtn">CREATE</button>
-
+    <form id="form-section">
+      <input type="text" name="title" id="title" placeholder="blog title" required />
+      <textarea name="post-content" id="post-content" required placeholder="blog text"></textarea>
+      <button type="submit" class="myButton">Create</button>
     </form>
 
-    <!-- <button>GET</button> -->
 
-    <ol id="postContent"></ol>
-
+    <ol id="blogList"></ol>
   </div>
 
 </body>

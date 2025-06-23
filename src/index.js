@@ -1,16 +1,16 @@
-const apiUrl = ('http://localhost:3000/posts');
-const postContent = document.getElementById("postContent");
-const formSection = document.getElementById("form-section");
+const apiUrl = "http://localhost:3000/posts";
 
-//get post
+const postList = document.getElementById("blogList");
 
-function getPost() {
+const createForm = document.getElementById("form-section");
+
+function getPosts() {
   fetch(apiUrl)
-    .then(res => res.json())
-    .then(data => {
-      postContent.innerHTML = "";
+    .then((res) => res.json())
+    .then((data) => {
+      postList.innerHTML = "";
 
-      data.forEach(post => {
+      data.forEach((post) => {
         const blogId = post.id;
         const blogTitle = post.title || "";
         const blogBody = post.body || "";
@@ -25,45 +25,41 @@ function getPost() {
           <p>${blogBody}</p>
         </div>
         <div class="actions">
-          <button onclick="showEditForm('${blogId}', '${blogTitle}', '${blogBody}')" class="myButton"><i class='bx bx-edit-alt'></i></button>
-          <button onclick="deletePost('${blogId}')" class="myDeleteButton"><i class='bx bx-trash'></i></button>
+          <button onclick="showEditForm('${blogId}', '${blogTitle}', '${blogBody}')" class="myButton">edit</button>
+          <button onclick="deletePost('${blogId}')" class="myDeleteButton">delete</button>
         </div>
         </div>
         
         `;
 
-        postContent.appendChild(li);
+        postList.appendChild(li);
       });
     });
 }
 
-// post(create)
-
-formSection.addEventListener("submit", (e) => {
+createForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
-  const title = document.getElementById("blog-title").value;
-  const body = document.getElementById("myBlogText").value;
+  const title = document.getElementById("title").value;
+  const body = document.getElementById("post-content").value;
 
   fetch(apiUrl, {
     method: "POST",
-    headers: { "Content-type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({ title, body }),
   })
-
-    .then(res => res.json())
-    .then(data => {
-      alert("post created successfully")
+    .then((res) => res.json())
+    .then((data) => {
+      alert("Post created successfully!");
       console.log(data);
-      getPost();
-      formSection.reset();
+      getPosts();
+      createForm.reset();
     });
-
 });
 
-//
-
-function showEditForm(blogId, currentTitle, currentBody) {
+function showEditForm(postId, currentTitle, currentBody) {
   const postDiv = document.getElementById(`post-${blogId}`);
 
   postDiv.innerHTML = `
@@ -71,32 +67,32 @@ function showEditForm(blogId, currentTitle, currentBody) {
 <div class="edit-form">
     <h3>Edit Post</h3>
    <div>
-        <input type="text" id="edit-title-${blogId}" value="${currentTitle}" placeholder="Edit title">
-<textarea id="edit-content-${blogId}" placeholder="Edit content">${currentBody}</textarea>
+        <input type="text" id="edit-title-${postId}" value="${currentTitle}" placeholder="Edit title">
+<textarea id="edit-content-${postId}" placeholder="Edit content">${currentBody}</textarea>
    </div>
 <div>
-<button onclick="saveEdit('${blogId}')" class="myButton"><i class='bx bx-check'></i></button>
-<button onclick="cancelEdit('${blogId}')" class="myDeleteButton"><i class='bx bx-x'></i></button>
+<button onclick="saveEdit('${postId}')" class="myButton"><i class='bx bx-check'></i></button>
+<button onclick="cancelEdit('${postId}')" class="myDeleteButton"><i class='bx bx-x'></i></button>
 </div>
 
 </div>
 `;
 }
 
-// patch(update)
+// Patch request to update a post
 
 function saveEdit(postId) {
-  const newTitle = document.getElementById(`edit-title-${blogId}`).value;
-  const newContent = document.getElementById(`edit-content-${blogId}`).value;
+  const newTitle = document.getElementById(`edit-title-${postId}`).value;
+  const newContent = document.getElementById(`edit-content-${postId}`).value;
 
-  fetch(`${API_URL}/${blogId}`, {
+  fetch(`${apiUrl}/${postId}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ title: newTitle, body: newContent }),
   })
-    .then((response) => response.json())
+    .then((res) => res.json())
     .then((data) => {
       alert("Post updated successfully!");
       console.log(data);
@@ -108,12 +104,14 @@ function cancelEdit() {
   getPosts();
 }
 
+
+
 function deletePost(postId) {
   if (confirm("Are you sure you want to delete this post?")) {
-    fetch(`${API_URL}/${postId}`, {
+    fetch(`${apiUrl}/${postId}`, {
       method: "DELETE",
     })
-      .then((response) => response.json())
+      .then((res) => res.json())
       .then((data) => {
         alert("Post deleted successfully!");
         console.log(data);
