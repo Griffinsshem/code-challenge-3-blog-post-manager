@@ -24,12 +24,12 @@ A simple web-based blog management application that allows users to create, read
 ```
 blog-post-manager/
 │
-├── index.html         # Main HTML structure
+├── index.html         
 ├── css/
-│   └── style.css      # Styling for layout and components
+│   └── style.css     
 ├── src/
-│   └── index.js       # JavaScript logic
-├── db.json            # Mock database for JSON Server
+│   └── index.js      
+├── db.json           
 ```
 
 ---
@@ -95,7 +95,7 @@ Just open ```index.html`` in your browser (no backend needed beyond the JSON Ser
 
     - A form lets users input a blog title and content.
 
-    - Blog posts are rendered as list items (```<li>```).
+    - Blog posts are rendered as list items.
 
     - Each post includes Edit and Delete buttons.
 
