@@ -28,7 +28,7 @@ blog-post-manager/
 ├── css/
 │   └── style.css      # Styling for layout and components
 ├── src/
-│   └── index.js       # JavaScript logic (CRUD operations)
+│   └── index.js       # JavaScript logic
 ├── db.json            # Mock database for JSON Server
 ```
 
