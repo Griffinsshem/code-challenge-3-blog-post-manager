@@ -4,6 +4,15 @@ const postList = document.getElementById("blogList");
 
 const createForm = document.getElementById("form-section");
 
+function escapeString(str) {
+  return str
+    .replace(/\\/g, "\\\\")
+    .replace(/'/g, "\\'")
+    .replace(/"/g, '\\"')
+    .replace(/\n/g, "\\n")
+    .replace(/\r/g, "\\r");
+}
+
 function getPosts() {
   fetch(apiUrl)
     .then((res) => res.json())
@@ -18,26 +27,24 @@ function getPosts() {
         const li = document.createElement("li");
 
         li.innerHTML = ` 
-        <div id="post-${postId}" class="post">
-
-         <div>
-          <h2>${postTitle}</h2>
-          <p>${postBody}</p>
-         </div>
-
-         <div class="actions">
-          <button onclick="showEditForm('${postId}', '${postTitle}', '${postBody}')" class="myButton">edit</button>
-          <button onclick="deletePost('${postId}')" class="myDeleteButton">delete</button>
-         </div>
-
-        </div>
-        
+          <div id="post-${postId}" class="post">
+            <div>
+              <h2>${postTitle}</h2>
+              <p>${postBody}</p>
+            </div>
+            <div class="actions">
+              <button onclick="showEditForm(${postId}, '${escapeString(postTitle)}', '${escapeString(postBody)}')" class="myButton">edit</button>
+              <button onclick="deletePost(${postId})" class="myDeleteButton">delete</button>
+            </div>
+          </div>
         `;
 
         postList.appendChild(li);
-      })
-    })
+      });
+    });
 }
+
+
 
 createForm.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -48,7 +55,7 @@ createForm.addEventListener("submit", (e) => {
   fetch(apiUrl, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ blogTitle, blogBody }),
+    body: JSON.stringify({ title: blogTitle, body: blogBody }),
   })
     .then((res) => res.json())
     .then((data) => {
