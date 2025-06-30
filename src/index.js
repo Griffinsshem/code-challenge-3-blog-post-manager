@@ -13,6 +13,37 @@ function escapeString(str) {
     .replace(/\r/g, "\\r");
 }
 
+// function getPosts() {
+//   fetch(apiUrl)
+//     .then((res) => res.json())
+//     .then((data) => {
+//       postList.innerHTML = "";
+
+//       data.forEach((post) => {
+//         const postId = post.id;
+//         const postTitle = post.title || "";
+//         const postBody = post.body || "";
+
+//         const li = document.createElement("li");
+
+//         li.innerHTML = ` 
+//           <div id="post-${postId}" class="post">
+//             <div>
+//               <h2>${postTitle}</h2>
+//               <p>${postBody}</p>
+//             </div>
+//             <div class="actions">
+//               <button onclick="showEditForm(${postId}, '${escapeString(postTitle)}', '${escapeString(postBody)}')" class="myButton">edit</button>
+//               <button onclick="deletePost(${postId})" class="myDeleteButton">delete</button>
+//             </div>
+//           </div>
+//         `;
+
+//         postList.appendChild(li);
+// });
+// });
+// }
+
 function getPosts() {
   fetch(apiUrl)
     .then((res) => res.json())
@@ -26,20 +57,28 @@ function getPosts() {
 
         const li = document.createElement("li");
 
-        li.innerHTML = ` 
+        li.innerHTML = `
           <div id="post-${postId}" class="post">
             <div>
               <h2>${postTitle}</h2>
               <p>${postBody}</p>
             </div>
             <div class="actions">
-              <button onclick="showEditForm(${postId}, '${escapeString(postTitle)}', '${escapeString(postBody)}')" class="myButton">edit</button>
-              <button onclick="deletePost(${postId})" class="myDeleteButton">delete</button>
+              <button class="myButton edit-btn">edit</button>
+              <button class="myDeleteButton delete-btn">delete</button>
             </div>
           </div>
         `;
 
+        // Append the new post
         postList.appendChild(li);
+
+        // Attach event listeners AFTER element is in the DOM
+        const editBtn = li.querySelector(".edit-btn");
+        const deleteBtn = li.querySelector(".delete-btn");
+
+        editBtn.addEventListener("click", () => showEditForm(postId, postTitle, postBody));
+        deleteBtn.addEventListener("click", () => deletePost(postId));
       });
     });
 }
